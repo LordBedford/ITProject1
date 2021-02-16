@@ -15,7 +15,6 @@ serverList = {
       "qtsdatacenter.aws.com": "128.64.3.2 A",
       "mx.rutgers.edu": "192.64.4.2 A",
       "kill.cs.rutgers.edu": "182.48.3.2 A",
-      "mx.rutgers.edu": "192.64.4.2 A",
       "www.ibm.com": "192.64.4.2 A",
       "www.google.com": "8.6.4.2 A"
     }
