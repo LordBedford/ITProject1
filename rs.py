@@ -3,19 +3,19 @@ import time
 import random
 import socket
 import sys
+
+try:
+    ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    print("[S]: Server socket created")
+except socket.error as err:
+    print('socket open error: {}\n'.format(err))
+    exit()
+
+server_binding = ('', int(sys.argv[1]))
+print(sys.argv[1])
+ss.bind(server_binding)
+ss.listen(1)
 while(True):
-    try:
-        ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        print("[S]: Server socket created")
-    except socket.error as err:
-        print('socket open error: {}\n'.format(err))
-        exit()
-
-    server_binding = ('', int(sys.argv[1]))
-    print(sys.argv[1])
-    ss.bind(server_binding)
-    ss.listen(1)
-
     csockid, addr = ss.accept()
     print("[S]: Got a connection request from a client at {}".format(addr))
 
@@ -37,5 +37,5 @@ while(True):
 
 
     # Close the server socket
-    ss.close()
+ss.close()
 exit()
