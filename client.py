@@ -1,4 +1,5 @@
 import socket
+import time
 
 def client():
     #open input folder and store lines in sites list
@@ -24,9 +25,9 @@ def client():
     cs.send("www.google.com".encode('utf-8'))
     data_from_server = cs.recv(100)
     print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8')))
-    cs.send("MX.RUTGERS.EDU".encode('utf-8'))
-    #data_from_server = cs.recv(100)
-    #print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8')))
+    cs.send("www.ibm.com".encode('utf-8'))
+    data_from_server = cs.recv(100)
+    print("[C]: Data received from server: {}".format(data_from_server.decode('utf-8')))
 
     # close the client socket
     cs.close()
