@@ -40,9 +40,9 @@ def client_driver():
 
     #create connection and send request to RS for each website
     for site in sites:
+        site = site.rstrip('\n')
         response = client(site)
         responses.append( (site, response) )
 
-    print(responses)
 
 client_driver()

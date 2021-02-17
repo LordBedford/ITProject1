@@ -13,6 +13,7 @@ except socket.error as err:
     exit()
 
 
+
 with open("PROJI-DNSRS.txt") as DNS:
     DNSList = [line.rstrip('\n').split(" ", 1) for line in DNS]#Reads from the file
 
@@ -23,7 +24,6 @@ for i in range(len(DNSList)-1):
     serverList[DNSList[i][0]] = []  #Creates the dictionary severList from the DNS 2d array
     serverList[DNSList[i][0]].append(DNSList[i][1])
     print(serverList[DNSList[i][0]])
-
 
 server_binding = ('', int(sys.argv[1]))
 print(sys.argv[1])
