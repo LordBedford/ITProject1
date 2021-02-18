@@ -28,7 +28,7 @@ for i in range(len(DNSList)-1):
 server_binding = ('', int(sys.argv[1]))
 print(sys.argv[1])
 ss.bind(server_binding)
-ss.listen(5)
+ss.listen(8)
 
 while(True):
     (csockid, addr) = ss.accept()
