@@ -49,6 +49,7 @@ def client_driver():
     #create connection and send request to RS for each website
     for site in sites:
         site = site.rstrip('\n')
+        print(site)
         response = client(site,rs_port)
         responses.append( (site, response) )
 

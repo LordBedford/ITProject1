@@ -15,12 +15,12 @@ except socket.error as err:
 
 
 with open("PROJI-DNSRS.txt") as DNS:
-    DNSList = [line.rstrip('\n').split(" ", 1) for line in DNS]#Reads from the file
+    DNSList = [line.rstrip('\n').lower().split(" ", 1) for line in DNS]#Reads from the file
 
 print(DNSList)
 
 serverList = {}
-for i in range(len(DNSList)-1):
+for i in range(len(DNSList)):
     serverList[DNSList[i][0]] = []  #Creates the dictionary severList from the DNS 2d array
     serverList[DNSList[i][0]].append(DNSList[i][1])
     print(serverList[DNSList[i][0]])
@@ -37,26 +37,28 @@ while(True):
     data = csockid.recv(1000)
     data = data.decode("UTF-8","strict")
     data = data.replace("\n","")
-
     print("[S]: The requested domain is: ", data)
-    print("[S]: The sent address is: ", serverList.get(data.lower(), "localhost - NS"))
+    data = data.lower()
+    #print("[S]: The sent address is: ", serverList.get(data.lower(), "localhost - NS"))
     if data in serverList:
         print(serverList[data.lower()])
         csockid.send(serverList[data.lower()][0].encode('utf-8'))
     else:
         data = data.replace("www.","1")
-        print(data)
+        print(data,"1")
         if data in serverList:
             print(serverList[data.lower()])
             csockid.send(serverList[data.lower()][0].encode('utf-8'))
         else:
             data = "www." + data
-            print(data)
+            print(data,"2")
             if data in serverList:
                 print(serverList[data.lower()])
                 csockid.send(serverList[data.lower()][0].encode('utf-8'))
             else:
-                ret = socket.gethostbyname(socket.gethostname()) + "- NS"
+                ret = list(serverList.keys())[-1]
+                print(list(serverList.keys())[-1])
+                ret = ret + " " + serverList[list(serverList.keys())[-1]][0].upper()
                 print(ret)
                 csockid.send(ret.encode('utf-8'))
     time.sleep(5)
