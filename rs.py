@@ -44,7 +44,15 @@ while(True):
         print(serverList[data.lower()])
         csockid.send(serverList[data.lower()][0].encode('utf-8'))
     else:
-        csockid.send("localhost - NS".encode('utf-8'))
+        data = "www."+data
+        print(data)
+        if data in serverList:
+            print(serverList[data.lower()])
+            csockid.send(serverList[data.lower()][0].encode('utf-8'))
+        else:
+            ret = socket.gethostbyname(socket.gethostname()) + "- NS"
+            print (ret)
+            csockid.send(ret.encode('utf-8'))
     time.sleep(5)
 
 
