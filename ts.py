@@ -48,19 +48,7 @@ def ts():
             print(serverList[data.lower()])
             csockid.send(serverList[data.lower()][0].encode('utf-8'))
         else:
-            data = data.replace("www.", "1")
-            print(data, "1")
-            if data in serverList:
-                print(serverList[data.lower()])
-                csockid.send(serverList[data.lower()][0].encode('utf-8'))
-            else:
-                data = "www." + data
-                print(data, "2")
-                if data in serverList:
-                    print(serverList[data.lower()])
-                    csockid.send(serverList[data.lower()][0].encode('utf-8'))
-                else:
-                    csockid.send("- Error:HOST NOT FOUND".encode('utf-8'))
+            csockid.send("- Error:HOST NOT FOUND".encode('utf-8'))
         time.sleep(5)
 
     # Close the server socket
