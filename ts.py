@@ -60,7 +60,7 @@ def ts():
                     print(serverList[data.lower()])
                     csockid.send(serverList[data.lower()][0].encode('utf-8'))
                 else:
-                    csockid.send("ERROR".encode('utf-8'))
+                    csockid.send("- Error:HOST NOT FOUND".encode('utf-8'))
         time.sleep(5)
 
     # Close the server socket
