@@ -37,6 +37,8 @@ while(True):
     data = csockid.recv(1000)
     data = data.decode("UTF-8","strict")
     data = data.replace("\n","")
+    host = socket.gethostname()
+    print("[S]: Server host name is {}".format(host))
 
     print("[S]: The requested domain is: ", data)
     print("[S]: The sent address is: ", serverList.get(data.lower(), "localhost - NS"))

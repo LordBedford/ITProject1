@@ -1,6 +1,4 @@
-import threading
 import time
-import random
 import socket
 import sys
 
@@ -17,6 +15,8 @@ def ts():
         DNSList = [line.rstrip('\n').split(" ", 1) for line in DNS]  # Reads from the file
 
     print(DNSList)
+    host = socket.gethostname()
+    print("[S]: Server host name is {}".format(host))
 
     serverList = {}
     for i in range(len(DNSList) - 1):
