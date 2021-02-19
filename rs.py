@@ -44,23 +44,11 @@ while(True):
         print(serverList[data.lower()])
         csockid.send(serverList[data.lower()][0].encode('utf-8'))
     else:
-        data = data.replace("www.","1")
-        print(data,"1")
-        if data in serverList:
-            print(serverList[data.lower()])
-            csockid.send(serverList[data.lower()][0].encode('utf-8'))
-        else:
-            data = "www." + data
-            print(data,"2")
-            if data in serverList:
-                print(serverList[data.lower()])
-                csockid.send(serverList[data.lower()][0].encode('utf-8'))
-            else:
-                ret = list(serverList.keys())[-1]
-                print(list(serverList.keys())[-1])
-                ret = ret + " " + serverList[list(serverList.keys())[-1]][0].upper()
-                print(ret)
-                csockid.send(ret.encode('utf-8'))
+       ret = list(serverList.keys())[-1]
+       print(list(serverList.keys())[-1])
+       ret = ret + " " + serverList[list(serverList.keys())[-1]][0].upper()
+       print(ret)
+       csockid.send(ret.encode('utf-8'))
     time.sleep(5)
 
 
