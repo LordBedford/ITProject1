@@ -3,6 +3,8 @@ import time
 import random
 import socket
 import sys
+
+
 try:
     ss = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     print("[S]: Server socket created")
@@ -10,39 +12,60 @@ except socket.error as err:
     print('socket open error: {}\n'.format(err))
     exit()
 
+
+
+with open("PROJI-DNSRS.txt") as DNS:
+    DNSList = [line.rstrip('\n').lower().split(" ", 1) for line in DNS]#Reads from the file
+
+print(DNSList)
+
+serverList = {}
+for i in range(len(DNSList)):
+    serverList[DNSList[i][0]] = []  #Creates the dictionary severList from the DNS 2d array
+    serverList[DNSList[i][0]].append(DNSList[i][1])
+    print(serverList[DNSList[i][0]])
+
 server_binding = ('', int(sys.argv[1]))
 print(sys.argv[1])
 ss.bind(server_binding)
-ss.listen(1)
-host = socket.gethostname()
-print("[S]: Server host name is {}".format(host))
-localhost_ip = (socket.gethostbyname(host))
-print("[S]: Server IP address is {}".format(localhost_ip))
+ss.listen(8)
+
 while(True):
-    csockid, addr = ss.accept()
-    data = csockid.recv(1000)
-    if not data:
-        break
-    data = data.decode("UTF-8","strict")
-    serverList = {
-      "qtsdatacenter.aws.com": "128.64.3.2 A",
-      "mx.rutgers.edu": "192.64.4.2 A",
-      "kill.cs.rutgers.edu": "182.48.3.2 A",
-      "mx.rutgers.edu": "192.64.4.2 A",
-      "www.ibm.com": "192.64.4.2 A",
-      "www.google.com": "8.6.4.2 A"
-    }
-    print("[S]: The requested domain is: ", data)
-    if data in serverList:
-        csockid.send(serverList[data].encode('utf-8'))
-    else:
-        csockid.send("localhost - NS".encode('utf-8'))
+    (csockid, addr) = ss.accept()
     print("[S]: Got a connection request from a client at {}".format(addr))
 
-    # send a intro message to the client.
-    msg = "Welcome to CS 352!"
-    csockid.send(msg.encode('utf-8'))
+    data = csockid.recv(1000)
+    data = data.decode("UTF-8","strict")
+    data = data.replace("\n","")
+    print("[S]: The requested domain is: ", data)
+    data = data.lower()
+    #print("[S]: The sent address is: ", serverList.get(data.lower(), "localhost - NS"))
+    if data in serverList:
+        print(serverList[data.lower()])
+        csockid.send(serverList[data.lower()][0].encode('utf-8'))
+    else:
+        data = data.replace("www.","1")
+        print(data,"1")
+        if data in serverList:
+            print(serverList[data.lower()])
+            csockid.send(serverList[data.lower()][0].encode('utf-8'))
+        else:
+            data = "www." + data
+            print(data,"2")
+            if data in serverList:
+                print(serverList[data.lower()])
+                csockid.send(serverList[data.lower()][0].encode('utf-8'))
+            else:
+                ret = list(serverList.keys())[-1]
+                print(list(serverList.keys())[-1])
+                ret = ret + " " + serverList[list(serverList.keys())[-1]][0].upper()
+                print(ret)
+                csockid.send(ret.encode('utf-8'))
+    time.sleep(5)
 
-    # Close the server socket
-    ss.close()
+
+
+# Close the server socket
+
+ss.close()
 exit()
