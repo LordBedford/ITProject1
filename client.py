@@ -52,6 +52,8 @@ def client_driver():
     with open('PROJI-HNS.txt') as f:
         sites = f.readlines()
 
+    outF = open("RESOLVED1.txt", "w")
+
     #List of thruples to store responses
     responses = list()
 
@@ -59,9 +61,11 @@ def client_driver():
     for site in sites:
         site = site.rstrip('\n')
         response = client(site,rs_port, rs_host_name)
-        responses.append((site, response))
-
-    print(responses)
+        outF.write(site)
+        outF.write(" ")
+        outF.write(response)
+        outF.write("\n")
+    outF.close()
 
 
 client_driver()
