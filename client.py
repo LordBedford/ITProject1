@@ -35,7 +35,7 @@ def client(request, port, host ):
 
     #if the rs server respons with "localhost - NS" call client again on the
     if data_from_server[-1] == "NS":
-        response = client( request, ts_port, host)
+        response = client( request, ts_port, data_from_server[0])
 
     # close the client socket
     cs.close()
@@ -61,6 +61,7 @@ def client_driver():
     for site in sites:
         site = site.rstrip('\n')
         response = client(site,rs_port, rs_host_name)
+        response = response.upper()
         outF.write(site)
         outF.write(" ")
         outF.write(response)
